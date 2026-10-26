@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "E:\\Desktop\\BE\\Backend-Internship\\Week02-adavancedC#\\Task\\Library_Management_System\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{56F47E04-3DAA-45FE-B4D0-4F65EFFB2ED9}|Library_Management_System\\Library_Management_System.csproj|e:\\desktop\\be\\backend-internship\\week02-adavancedc#\\task\\library_management_system\\library_management_system\\services\\library.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{56F47E04-3DAA-45FE-B4D0-4F65EFFB2ED9}|Library_Management_System\\Library_Management_System.csproj|solutionrelative:library_management_system\\services\\library.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{56F47E04-3DAA-45FE-B4D0-4F65EFFB2ED9}|Library_Management_System\\Library_Management_System.csproj|e:\\desktop\\be\\backend-internship\\week02-adavancedc#\\task\\library_management_system\\library_management_system\\models\\member.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{56F47E04-3DAA-45FE-B4D0-4F65EFFB2ED9}|Library_Management_System\\Library_Management_System.csproj|solutionrelative:library_management_system\\models\\member.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{56F47E04-3DAA-45FE-B4D0-4F65EFFB2ED9}|Library_Management_System\\Library_Management_System.csproj|e:\\desktop\\be\\backend-internship\\week02-adavancedc#\\task\\library_management_system\\library_management_system\\models\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{56F47E04-3DAA-45FE-B4D0-4F65EFFB2ED9}|Library_Management_System\\Library_Management_System.csproj|solutionrelative:library_management_system\\models\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{56F47E04-3DAA-45FE-B4D0-4F65EFFB2ED9}|Library_Management_System\\Library_Management_System.csproj|e:\\desktop\\be\\backend-internship\\week02-adavancedc#\\task\\library_management_system\\library_management_system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56F47E04-3DAA-45FE-B4D0-4F65EFFB2ED9}|Library_Management_System\\Library_Management_System.csproj|solutionrelative:library_management_system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -14,21 +26,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Library.cs",
+              "DocumentMoniker": "E:\\Desktop\\BE\\Backend-Internship\\Week02-adavancedC#\\Task\\Library_Management_System\\Library_Management_System\\Services\\Library.cs",
+              "RelativeDocumentMoniker": "Library_Management_System\\Services\\Library.cs",
+              "ToolTip": "E:\\Desktop\\BE\\Backend-Internship\\Week02-adavancedC#\\Task\\Library_Management_System\\Library_Management_System\\Services\\Library.cs",
+              "RelativeToolTip": "Library_Management_System\\Services\\Library.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAADwvw4AAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T09:35:26.791Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Member.cs",
+              "DocumentMoniker": "E:\\Desktop\\BE\\Backend-Internship\\Week02-adavancedC#\\Task\\Library_Management_System\\Library_Management_System\\Models\\Member.cs",
+              "RelativeDocumentMoniker": "Library_Management_System\\Models\\Member.cs",
+              "ToolTip": "E:\\Desktop\\BE\\Backend-Internship\\Week02-adavancedC#\\Task\\Library_Management_System\\Library_Management_System\\Models\\Member.cs",
+              "RelativeToolTip": "Library_Management_System\\Models\\Member.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T09:17:49.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Book.cs",
+              "DocumentMoniker": "E:\\Desktop\\BE\\Backend-Internship\\Week02-adavancedC#\\Task\\Library_Management_System\\Library_Management_System\\Models\\Book.cs",
+              "RelativeDocumentMoniker": "Library_Management_System\\Models\\Book.cs",
+              "ToolTip": "E:\\Desktop\\BE\\Backend-Internship\\Week02-adavancedC#\\Task\\Library_Management_System\\Library_Management_System\\Models\\Book.cs",
+              "RelativeToolTip": "Library_Management_System\\Models\\Book.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAIwA4AAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T09:17:19.323Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d455e273-1acb-491f-b5c9-760a99044cf9}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\Desktop\\BE\\Backend-Internship\\Week02-adavancedC#\\Task\\Library_Management_System\\Library_Management_System\\Program.cs",
               "RelativeDocumentMoniker": "Library_Management_System\\Program.cs",
               "ToolTip": "E:\\Desktop\\BE\\Backend-Internship\\Week02-adavancedC#\\Task\\Library_Management_System\\Library_Management_System\\Program.cs",
               "RelativeToolTip": "Library_Management_System\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAAAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-26T07:13:05.338Z",
               "EditorCaption": ""
