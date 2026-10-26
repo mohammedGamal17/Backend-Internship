@@ -23,8 +23,8 @@ namespace Library_Management_System.Models
             PublicationYear = publicationYear;
         }
 
-        public void Borrow(int memberId)
-        {
+        public void Borrow(int memberId) { 
+       
             if (!IsAvailable)
             {
                 throw new InvalidOperationException("Book is already borrowed.");
