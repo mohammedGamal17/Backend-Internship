@@ -23,10 +23,10 @@ namespace Library_Management_System.Services
         public Book AddBook(string title, string author, int publicationYear)
         {
 
-            if (string.IsNullOrWhiteSpace(title))
-                throw new InvalidOperationException("Book title cannot be empty.");
-            if (string.IsNullOrWhiteSpace(author))
-                throw new InvalidOperationException("Author name cannot be empty.");
+            
+            if (books.Values.Any(b => b.Title.Equals(title, StringComparison.OrdinalIgnoreCase) && b.Author.Equals(author, StringComparison.OrdinalIgnoreCase)))
+                throw new InvalidOperationException("A book with the same title and author already exists.");
+
 
             var book = new Book(nextBookId++, title.Trim(), author.Trim(), publicationYear);
             books.Add(book.Id, book);
@@ -67,13 +67,12 @@ namespace Library_Management_System.Services
 
         public Member AddMember(string name, string email)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new InvalidOperationException("Member name cannot be empty.");
-            if (string.IsNullOrWhiteSpace(email))
-                throw new InvalidOperationException("Member email cannot be empty.");
+            
+            if(members.Values.Any(m => m.Email.Equals(email, StringComparison.OrdinalIgnoreCase)))
+                throw new InvalidOperationException("A member with the same email already exists.");
             var member = new Member(nextMemberId++, name.Trim(), email.Trim());
             members.Add(member.Id, member);
-           Console.Out.WriteLine($"Member added: {member}");
+            Console.Out.WriteLine($"Member added: {member}");
             return member;
         }
         public Member getMemberById(int memberId)
@@ -95,7 +94,7 @@ namespace Library_Management_System.Services
             var member = getMemberById(memberId);
             var book = getBookById(bookId);
 
-            if(!members.ContainsKey(memberId))
+            if (!members.ContainsKey(memberId))
             {
                 throw new KeyNotFoundException($"Member with Id {memberId} not found.");
             }
@@ -104,7 +103,7 @@ namespace Library_Management_System.Services
             {
                 throw new KeyNotFoundException($"Book with Id {bookId} not found.");
             }
-           
+
             book.Borrow(memberId);
             member.BorrowBook(bookId);
             Console.Out.WriteLine($"Book '{book.Title}' borrowed by member '{member.Name}'.");
@@ -123,10 +122,29 @@ namespace Library_Management_System.Services
             {
                 throw new KeyNotFoundException($"Book with Id {bookId} not found.");
             }
-           
+
             book.Return();
             member.ReturnBook(bookId);
             Console.Out.WriteLine($"Book '{book.Title}' returned by member '{member.Name}'.");
+        }
+
+
+        //helpers 
+
+
+
+        public void SeedSampleData()
+        {
+            AddBook("Clean Code", "Robert C. Martin", 2008);
+            AddBook("The Pragmatic Programmer", "Andrew Hunt", 1999);
+            AddBook("C# in Depth", "Jon Skeet", 2019);
+            AddBook("Design Patterns", "Erich Gamma", 1994);
+            AddBook("Refactoring", "Martin Fowler", 2018);
+
+            AddMember("Ahmed Hassan", "ahmed@example.com");
+            AddMember("Sara Mahmoud", "sara@example.com");
+
+            BorrowBook(memberId: 1, bookId: 3);
         }
     }
 }
