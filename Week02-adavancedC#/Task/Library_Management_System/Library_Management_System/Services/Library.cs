@@ -1,8 +1,5 @@
 ﻿using Library_Management_System.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static System.Net.Mime.MediaTypeNames;
+using System.Text.RegularExpressions;
 
 namespace Library_Management_System.Services
 {
@@ -23,7 +20,6 @@ namespace Library_Management_System.Services
         public Book AddBook(string title, string author, int publicationYear)
         {
 
-            
             if (books.Values.Any(b => b.Title.Equals(title, StringComparison.OrdinalIgnoreCase) && b.Author.Equals(author, StringComparison.OrdinalIgnoreCase)))
                 throw new InvalidOperationException("A book with the same title and author already exists.");
 
@@ -67,12 +63,13 @@ namespace Library_Management_System.Services
 
         public Member AddMember(string name, string email)
         {
-            
-            if(members.Values.Any(m => m.Email.Equals(email, StringComparison.OrdinalIgnoreCase)))
+
+            if (members.Values.Any(m => m.Email.Equals(email, StringComparison.OrdinalIgnoreCase)))
                 throw new InvalidOperationException("A member with the same email already exists.");
             var member = new Member(nextMemberId++, name.Trim(), email.Trim());
             members.Add(member.Id, member);
             Console.Out.WriteLine($"Member added: {member}");
+
             return member;
         }
         public Member getMemberById(int memberId)
@@ -104,9 +101,13 @@ namespace Library_Management_System.Services
                 throw new KeyNotFoundException($"Book with Id {bookId} not found.");
             }
 
-            book.Borrow(memberId);
-            member.BorrowBook(bookId);
-            Console.Out.WriteLine($"Book '{book.Title}' borrowed by member '{member.Name}'.");
+            bool isSuccess = member.BorrowBook(bookId);
+            if (isSuccess)
+            {
+                book.Borrow(memberId);
+                Console.Out.WriteLine($"Book '{book.Title}' borrowed by member '{member.Name}'.");
+            }
+
         }
 
         public void ReturnBook(int memberId, int bookId)
@@ -123,15 +124,32 @@ namespace Library_Management_System.Services
                 throw new KeyNotFoundException($"Book with Id {bookId} not found.");
             }
 
-            book.Return();
-            member.ReturnBook(bookId);
-            Console.Out.WriteLine($"Book '{book.Title}' returned by member '{member.Name}'.");
+            bool isSuccess = member.ReturnBook(bookId);
+            if (isSuccess)
+            {
+                book.Return();
+                Console.Out.WriteLine($"Book '{book.Title}' returned by member '{member.Name}'.");
+            }
+
         }
 
 
         //helpers 
 
-
+        public bool IsValidMail(string email)
+        {
+            try
+            {
+                Regex.IsMatch(email,
+                   @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                   RegexOptions.IgnoreCase);
+                return true;
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+        }
 
         public void SeedSampleData()
         {

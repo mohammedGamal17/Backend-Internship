@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Library_Management_System.Models
+﻿namespace Library_Management_System.Models
 {
     public class Member
     {
@@ -22,22 +18,32 @@ namespace Library_Management_System.Models
             RegisteredOn = DateTime.Now;
         }
 
-        public void BorrowBook(int bookId)
+        public bool BorrowBook(int bookId)
         {
+            bool x;
             if (borrowedBooks.Count >= maxBooks)
             {
+
                 throw new InvalidOperationException("Member has reached the maximum number of borrowed books.");
+
             }
+            x = true;
             borrowedBooks.Add(bookId);
+            return x;
+
         }
 
-        public void ReturnBook(int bookId)
+        public bool ReturnBook(int bookId)
         {
+            bool x;
             if (!borrowedBooks.Contains(bookId))
             {
                 throw new InvalidOperationException("This book was not borrowed by the member.");
             }
+            x = true;
             borrowedBooks.Remove(bookId);
+            return x;
+
         }
 
         public bool HasBorrowedBook(int bookId)

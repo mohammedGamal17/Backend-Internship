@@ -7,7 +7,7 @@ public static class Program
     {
 
         var library = new Library();
-        library.SeedSampleData();           
+        library.SeedSampleData();
         var app = new LibraryApp(library);
         app.Run();
     }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Library_Management_System.Models
+﻿namespace Library_Management_System.Models
 {
 
     public class Book
@@ -23,8 +19,9 @@ namespace Library_Management_System.Models
             PublicationYear = publicationYear;
         }
 
-        public void Borrow(int memberId) { 
-       
+        public void Borrow(int memberId)
+        {
+
             if (!IsAvailable)
             {
                 throw new InvalidOperationException("Book is already borrowed.");

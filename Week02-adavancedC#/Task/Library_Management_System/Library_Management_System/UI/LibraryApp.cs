@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using Library_Management_System.Models;
+﻿using Library_Management_System.Models;
 using Library_Management_System.Services;
 
 namespace Library_Management_System.UI
@@ -12,7 +8,7 @@ namespace Library_Management_System.UI
         private readonly Library library;
         private readonly List<(int Number, string Label, Action Handler)> menu;
 
-        public LibraryApp( Library library)
+        public LibraryApp(Library library)
         {
             this.library = library;
             menu = new List<(int, string, Action)>
@@ -64,6 +60,7 @@ namespace Library_Management_System.UI
                 Console.WriteLine();
                 Console.Write("Press Enter to continue...");
                 Console.ReadLine();
+
             }
 
         }
@@ -75,7 +72,7 @@ namespace Library_Management_System.UI
             Console.WriteLine("================================");
             Console.WriteLine("      LIBRARY MANAGEMENT");
             Console.WriteLine("================================");
-            Console.WriteLine($"Available: {library.totalBooks}  Borrowed: {library.totalBorrowedBooks}");
+            Console.WriteLine($"Total Books: {library.totalBooks}  Borrowed: {library.totalBorrowedBooks}  Available Books:{library.totalAvailableBooks}");
             Console.WriteLine();
 
             foreach (var option in menu)
@@ -84,7 +81,7 @@ namespace Library_Management_System.UI
             Console.WriteLine("0. Exit");
             Console.WriteLine();
         }
-        
+
         //menu methods
         private void DisplayAllBooks()
         {
@@ -137,7 +134,7 @@ namespace Library_Management_System.UI
         private void BorrowBook()
         {
             int memberId = ReadNumber("Enter member ID: ");
-        
+
             int bookId = ReadNumber("Enter book ID: ");
             try
             {
@@ -156,7 +153,7 @@ namespace Library_Management_System.UI
         {
             int memberId = ReadNumber("Enter member ID: ");
             int bookId = ReadNumber("Enter book ID: ");
-try
+            try
             {
                 library.ReturnBook(memberId, bookId);
                 Console.WriteLine("Book returned successfully.");
@@ -184,7 +181,7 @@ try
 
         private void SearchBooks()
         {
-            
+
             string keyword = ReadText("Enter title keyword to search: ");
             var results = library.search(keyword);
             if (results.Any())
