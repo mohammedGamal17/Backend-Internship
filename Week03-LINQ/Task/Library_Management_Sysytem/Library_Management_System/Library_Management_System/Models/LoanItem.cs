@@ -10,6 +10,7 @@
         public string BookTitle { get; set; } = "";
         public bool IsReturned => ReturnedDate is not null;
         public bool IsOverdue => !IsReturned && DueDate.Date < DateTime.Today;
+        public int DaysOverdue => IsOverdue ? (DateTime.Today - DueDate.Date).Days : 0;
     }
 
 }
