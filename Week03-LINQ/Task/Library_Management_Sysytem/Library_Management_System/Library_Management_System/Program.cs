@@ -1,4 +1,6 @@
 ﻿using Library_Management_System.Data;
+using Library_Management_System.Repositories;
+using Library_Management_System.Services;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
@@ -25,5 +27,16 @@ public class Program
             Console.WriteLine(ex.Message);
             return;
         }
+
+        var bookRepository = new BookRepository(db);
+        var categoryRepository = new CategoryRepository(db);
+        var memberRepository = new MemberRepository(db);
+        var loanRepository = new LoanRepository(db);
+
+        var bookService = new BookService(bookRepository, categoryRepository);
+        var memberService = new MemberService(memberRepository);
+        var loanService = new LoanService(loanRepository, bookRepository, memberRepository);
+
+
     }
 }

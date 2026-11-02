@@ -2,6 +2,7 @@
 using Library_Management_System.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Library_Management_System.Repositories
 {
@@ -54,7 +55,7 @@ namespace Library_Management_System.Repositories
 
         }
 
-        public bool update(Member member)
+        public bool Update(Member member)
         {
             int rows = db.ExecuteNonQuery(@"
             UPDATE dbo.Members
@@ -68,7 +69,7 @@ namespace Library_Management_System.Repositories
             return rows > 0;
         }
 
-        public bool delete(int memberId)
+        public bool Delete(int memberId)
         {
 
             int rows = db.ExecuteNonQuery(
@@ -97,6 +98,18 @@ namespace Library_Management_System.Repositories
                   WHERE l.MemberId = @MemberId AND li.ReturnedDate IS NULL;",
                 new SqlParameter("@MemberId", memberId));
             return Convert.ToInt32(count) > 0;
+        }
+
+        public List<Member> Search(string text)
+        {
+            DataTable table = db.ExecuteQuery(
+                selectMembersQuery + " WHERE b.Email LIKE @Pattern OR b.FullName LIKE @Pattern ORDER BY b.FullName",
+                new SqlParameter("@Pattern", "%" + text + "%"));
+
+            var members = new List<Member>();
+            foreach (DataRow row in table.Rows)
+                members.Add(MapRow(row));
+            return members;
         }
 
         //helpers 

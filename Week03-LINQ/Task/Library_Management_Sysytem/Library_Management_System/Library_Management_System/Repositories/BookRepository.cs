@@ -98,14 +98,17 @@ namespace Library_Management_System.Repositories
             return Convert.ToInt32(result) == 1;
         }
 
-        // for search
-        public Book? GetBookByName(string title)
+
+        public List<Book> Search(string text)
         {
             DataTable table = db.ExecuteQuery(
-                selectBooksQuery + " WHERE b.Title = @Title",
-                new SqlParameter("@Title", title));
+                selectBooksQuery + " WHERE b.Title LIKE @Pattern OR b.Author LIKE @Pattern ORDER BY b.Title",
+                new SqlParameter("@Pattern", "%" + text + "%"));
 
-            return table.Rows.Count == 0 ? null : MapRow(table.Rows[0]);
+            var books = new List<Book>();
+            foreach (DataRow row in table.Rows)
+                books.Add(MapRow(row));
+            return books;
         }
 
         //helpers
