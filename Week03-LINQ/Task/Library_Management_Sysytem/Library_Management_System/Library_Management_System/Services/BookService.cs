@@ -55,13 +55,19 @@ namespace Library_Management_System.Services
         {
             Book book = GetById(bookId);
 
-            if (!books.IsBookAvailable(bookId))
+            if (!books.HasLoanHistory(bookId))
                 throw new LibraryException(
                     $"\"{book.Title}\" has loan history, so it can't be deleted. " );
 
             books.Delete(bookId);
         }
 
+        public List<Book> Search(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                throw new LibraryException("Search text cannot be empty.");
+            return books.Search(text.Trim());
+        }
         // helpers
         private void Validate(Book book)
         {

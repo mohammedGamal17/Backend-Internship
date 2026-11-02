@@ -7,6 +7,6 @@
         public string Email { get; set; } = "";
         public DateTime JoinDate { get; set; }
         public bool IsActive { get; set; }
-        public int Booksloaned { get; set; }
+        public int BooksOnLoan { get; set; }
     }
 }

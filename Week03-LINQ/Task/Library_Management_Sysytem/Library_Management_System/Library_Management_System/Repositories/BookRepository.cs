@@ -98,6 +98,15 @@ namespace Library_Management_System.Repositories
             return Convert.ToInt32(result) == 1;
         }
 
+        public bool HasLoanHistory(int bookId)
+        {
+            object? count = db.ExecuteScalar(
+                "SELECT COUNT(*) FROM dbo.LoanItems WHERE BookId = @BookId;",
+                new SqlParameter("@BookId", bookId));
+
+            return Convert.ToInt32(count) > 0;
+        }
+
 
         public List<Book> Search(string text)
         {

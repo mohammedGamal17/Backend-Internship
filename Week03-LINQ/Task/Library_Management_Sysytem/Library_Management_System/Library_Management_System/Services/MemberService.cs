@@ -14,7 +14,7 @@ namespace Library_Management_System.Services
         }
 
         public List<Member> GetAll() => this.members.GetAll();
-        public Member? GetById(int memberId) => this.members.GetMemberById(memberId) ?? throw new LibraryException($"No member exists with ID {memberId}.");
+        public Member? GetById(int memberId) => this.members.GetById(memberId) ?? throw new LibraryException($"No member exists with ID {memberId}.");
 
         public Member Add(string fullName, string email)
         {
@@ -32,9 +32,9 @@ namespace Library_Management_System.Services
             member.Email = member.Email.Trim();
             Validate(member);
 
-            if (current.IsActive && !member.IsActive && current.Booksloaned > 0)
+            if (current.IsActive && !member.IsActive && current.BooksOnLoan > 0)
                 throw new LibraryException(
-                    $"{current.FullName} still has {current.Booksloaned} book(s) on loan. They must be returned before deactivating.");
+                    $"{current.FullName} still has {current.BooksOnLoan} book(s) on loan. They must be returned before deactivating.");
 
             members.Update(member);
             return GetById(member.MemberId);
@@ -51,6 +51,12 @@ namespace Library_Management_System.Services
             members.Delete(memberId);
         }
 
+        public List<Member> Search(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                throw new LibraryException("Search text cannot be empty.");
+            return members.Search(text.Trim());
+        }
 
         //helpers
         private void Validate(Member member)

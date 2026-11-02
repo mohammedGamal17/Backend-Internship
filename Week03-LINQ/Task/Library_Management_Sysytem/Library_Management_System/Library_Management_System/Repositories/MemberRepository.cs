@@ -14,7 +14,7 @@ namespace Library_Management_System.Repositories
                 (SELECT COUNT(*)
                  FROM   dbo.LoanItems li
                  INNER JOIN dbo.Loans l ON l.LoanId = li.LoanId
-                 WHERE  l.MemberId = m.MemberId AND li.ReturnedDate IS NULL) AS Booksloaned
+                 WHERE  l.MemberId = m.MemberId AND li.ReturnedDate IS NULL) AS BooksOnLoan
         FROM    dbo.Members m";
 
         public MemberRepository(DbHelper db)
@@ -32,7 +32,7 @@ namespace Library_Management_System.Repositories
             return members;
         }
 
-        public Member? GetMemberById(int memberId)
+        public Member? GetById(int memberId)
         {
             DataTable table = db.ExecuteQuery(
             selectMembersQuery + " WHERE m.MemberId = @MemberId",
@@ -100,11 +100,11 @@ namespace Library_Management_System.Repositories
             return Convert.ToInt32(count) > 0;
         }
 
-        public List<Member> Search(string text)
+        public List<Member> Search(string name)
         {
             DataTable table = db.ExecuteQuery(
-                selectMembersQuery + " WHERE b.Email LIKE @Pattern OR b.FullName LIKE @Pattern ORDER BY b.FullName",
-                new SqlParameter("@Pattern", "%" + text + "%"));
+                selectMembersQuery + " WHERE m.FullName LIKE @Pattern ORDER BY m.FullName",
+                new SqlParameter("@Pattern", "%" + name + "%"));
 
             var members = new List<Member>();
             foreach (DataRow row in table.Rows)
@@ -120,7 +120,7 @@ namespace Library_Management_System.Repositories
             Email = Convert.ToString(row["Email"]) ?? "",
             JoinDate = Convert.ToDateTime(row["JoinDate"]),
             IsActive = Convert.ToBoolean(row["IsActive"]),
-            Booksloaned = Convert.ToInt32(row["BooksOnLoan"]),
+            BooksOnLoan = Convert.ToInt32(row["BooksOnLoan"]),
         };
 
     }
