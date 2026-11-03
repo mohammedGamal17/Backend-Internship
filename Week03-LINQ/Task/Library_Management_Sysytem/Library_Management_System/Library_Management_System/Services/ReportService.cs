@@ -4,6 +4,7 @@ namespace Library_Management_System.Services
 {
 
     public record BookBorrowCount(int BookId, string Title, int TimesBorrowed);
+
     public record MemberActivity(int MemberId, string Name, int Loans, int BooksBorrowed, int BooksOnLoanNow);
     public record CategoryStats(string Category, int Titles, int TotalCopies, int CopiesOnLoan);
     public record LibrarySummary(int Titles, int TotalCopies, int CopiesOnLoan, int Members, int ActiveMembers,
@@ -22,14 +23,14 @@ namespace Library_Management_System.Services
             this.loans = loans;
         }
 
-
-        public List<BookBorrowCount> GetBookBorrowCounts()
+        public List<BookBorrowCount> GetBookBorrowCounts(int topCount)
         {
             var allLoans = loans.GetAll();
             var bookCounts = allLoans.SelectMany(l => l.Items)
                                      .GroupBy(i => new { i.BookId, i.BookTitle })
                                      .Select(g => new BookBorrowCount(g.Key.BookId, g.Key.BookTitle, g.Count()))
                                      .OrderByDescending(bc => bc.TimesBorrowed)
+                                     .Take(topCount)
                                      .ToList();
             return bookCounts;
         }

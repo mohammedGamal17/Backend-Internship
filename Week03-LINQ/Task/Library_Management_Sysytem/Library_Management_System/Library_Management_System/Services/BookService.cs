@@ -91,7 +91,7 @@ namespace Library_Management_System.Services
             _ => bookList,
         };
 
-        public List<Book> GeetByAvailability() =>
+        public List<Book> GetByAvailability() =>
             books.GetAll().Where(b => b.CanBeBorrowed).OrderBy(b => b.Title).ToList();
 
         // helpers

@@ -65,7 +65,7 @@ namespace Library_Management_System.Data
                 work(command);
                 transaction.Commit();
             }
-            catch
+            catch (Exception ex)
             {
                 transaction.Rollback();
                 throw;

@@ -7,6 +7,6 @@
 
         public static int PageCount(int itemCount, int pageSize) =>
        Math.Max(1, (int)Math.Ceiling(itemCount / (double)pageSize));
-    
-}
+
+    }
 }

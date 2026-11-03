@@ -91,17 +91,17 @@ namespace Library_Management_System.Services
             return GetById(loanId);
         }
 
-        public LoanItem Return(int loanId, int bookId)
+        public LoanItem Return(int loanItemId)
         {
-            Loan loan = GetById(loanId);
-            if (loan.Status == "Returned")
-                throw new LibraryException($"Loan {loanId} has already been returned.");
-            LoanItem? item = loan.Items.FirstOrDefault(i => i.BookId == bookId);
-            if (item is null)
-                throw new LibraryException($"Loan {loanId} does not include book ID {bookId}.");
+            LoanItem item = GetAll()
+                .SelectMany(l => l.Items)
+                .FirstOrDefault(i => i.LoanItemId == loanItemId)
+                ?? throw new LibraryException($"No borrowed book has item number {loanItemId}.");
+
             if (item.IsReturned)
-                throw new LibraryException($"Book ID {bookId} has already been returned for loan {loanId}.");
-            loans.ReturnLoan(loanId);
+                throw new LibraryException($"\"{item.BookTitle}\" was already returned on {item.ReturnedDate:dd MMM yyyy}.");
+
+            loans.ReturnLoan(loanItemId);
             return item;
         }
         // helpers 
