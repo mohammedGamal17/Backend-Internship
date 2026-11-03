@@ -83,7 +83,7 @@ namespace Library_Management_System.Repositories
             return loanId;
         }
 
-        public void ReturnBook(int loanItemId)
+        public void ReturnLoan(int loanItemId)
         {
             db.ExecuteInTransaction(command =>
             {

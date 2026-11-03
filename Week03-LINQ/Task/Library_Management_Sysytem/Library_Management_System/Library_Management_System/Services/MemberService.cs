@@ -4,6 +4,8 @@ using Library_Management_System.Repositories;
 
 namespace Library_Management_System.Services
 {
+    public enum MembersFilter { All, ActiveOnly, InactiveOnly }
+    public enum MemberSortOption { Name, NewestMember, MostBooksOnLoan }
     public class MemberService
     {
         private readonly MemberRepository members;
@@ -57,6 +59,20 @@ namespace Library_Management_System.Services
                 throw new LibraryException("Search text cannot be empty.");
             return members.Search(text.Trim());
         }
+        public List<Member> Filter(MembersFilter filter) => filter switch
+        {
+            MembersFilter.ActiveOnly => members.GetAll().Where(m => m.IsActive).ToList(),
+            MembersFilter.InactiveOnly => members.GetAll().Where(m => !m.IsActive).ToList(),
+            _ => members.GetAll(),
+        };
+
+        public List<Member> Sort(List<Member> members, MemberSortOption sortOption) => sortOption switch
+        {
+            MemberSortOption.Name => members.OrderBy(m => m.FullName).ToList(),
+            MemberSortOption.NewestMember => members.OrderByDescending(m => m.JoinDate).ToList(),
+            MemberSortOption.MostBooksOnLoan => members.OrderByDescending(m => m.BooksOnLoan).ToList(),
+            _ => throw new LibraryException($"Unknown sort option: {sortOption}."),
+        };
 
         //helpers
         private void Validate(Member member)

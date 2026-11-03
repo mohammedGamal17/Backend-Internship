@@ -4,6 +4,8 @@ using Library_Management_System.Repositories;
 
 namespace Library_Management_System.Services
 {
+    public enum BookSortOption { Title, Author, NewestFirst, Category, MostAvailable }
+
     public class BookService
     {
         private readonly BookRepository books;
@@ -55,7 +57,7 @@ namespace Library_Management_System.Services
         {
             Book book = GetById(bookId);
 
-            if (!books.HasLoanHistory(bookId))
+            if (books.HasLoanHistory(bookId))
                 throw new LibraryException(
                     $"\"{book.Title}\" has loan history, so it can't be deleted. " );
 
@@ -68,6 +70,30 @@ namespace Library_Management_System.Services
                 throw new LibraryException("Search text cannot be empty.");
             return books.Search(text.Trim());
         }
+
+
+        public List<Book> GetByCategory(int categoryId)
+        {
+            EnsureCategoryExists(categoryId);
+            return books.GetAll()
+                .Where(b => b.CategoryId == categoryId)
+                .OrderBy(b => b.Title)
+                .ToList();
+        }
+
+        public List<Book> Sort(List<Book> bookList, BookSortOption sortOption) => sortOption switch
+        {
+            BookSortOption.Title => bookList.OrderBy(b => b.Title).ToList(),
+            BookSortOption.Author => bookList.OrderBy(b => b.Author).ToList(),
+            BookSortOption.NewestFirst => bookList.OrderByDescending(b => b.PublishedYear).ToList(),
+            BookSortOption.Category => bookList.OrderBy(b => b.CategoryName).ToList(),
+            BookSortOption.MostAvailable => bookList.OrderByDescending(b => b.AvailableCopies).ToList(),
+            _ => bookList,
+        };
+
+        public List<Book> GeetByAvailability() =>
+            books.GetAll().Where(b => b.CanBeBorrowed).OrderBy(b => b.Title).ToList();
+
         // helpers
         private void Validate(Book book)
         {

@@ -85,18 +85,18 @@ namespace Library_Management_System.Repositories
             return result > 0;
         }
 
-        public bool IsBookAvailable(int bookId)
-        {
-            object? result = db.ExecuteScalar(
-                @"SELECT CASE WHEN b.IsAvailable = 1 AND (b.TotalCopies - 
-                    (SELECT COUNT(*) FROM dbo.LoanItems li
-                     WHERE li.BookId = b.BookId AND li.ReturnedDate IS NULL)) > 0
-                  THEN 1 ELSE 0 END
-                  FROM dbo.Books b
-                  WHERE b.BookId = @BookId",
-                new SqlParameter("@BookId", bookId));
-            return Convert.ToInt32(result) == 1;
-        }
+        //public bool IsBookAvailable(int bookId)
+        //{
+        //    object? result = db.ExecuteScalar(
+        //        @"SELECT CASE WHEN b.IsAvailable = 1 AND (b.TotalCopies - 
+        //            (SELECT COUNT(*) FROM dbo.LoanItems li
+        //             WHERE li.BookId = b.BookId AND li.ReturnedDate IS NULL)) > 0
+        //          THEN 1 ELSE 0 END
+        //          FROM dbo.Books b
+        //          WHERE b.BookId = @BookId",
+        //        new SqlParameter("@BookId", bookId));
+        //    return Convert.ToInt32(result) == 1;
+        //}
 
         public bool HasLoanHistory(int bookId)
         {
