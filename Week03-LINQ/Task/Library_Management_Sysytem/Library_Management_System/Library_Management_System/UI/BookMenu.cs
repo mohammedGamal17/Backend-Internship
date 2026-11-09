@@ -98,7 +98,7 @@ namespace Library_Management_System.UI
             if (year is not null) book.PublishedYear = year;
 
             int? copies = Helpers.ReadOptionalInt($"Total copies [{book.TotalCopies}]", 0, 1000);
-            if (copies is not null) book.TotalCopies = copies.Value;
+            if (copies is not null && book.TotalCopies != copies.Value) book.TotalCopies = copies.Value;
 
             bool? lendable = Helpers.ReadOptionalYesNo($"Lendable [{(book.IsAvailable ? "y" : "n")}]");
             if (lendable is not null) book.IsAvailable = lendable.Value;
@@ -111,7 +111,7 @@ namespace Library_Management_System.UI
         {
             Book book = BookService.GetById(Helpers.ReadId("Book ID to delete"));
 
-            if ((bool)!Helpers.ReadOptionalYesNo($"Delete \"{book.Title}\" by {book.Author}? This can't be undone."))
+            if (!Helpers.ReadOptionalYesNo($"Delete \"{book.Title}\" by {book.Author}? This can't be undone."))
             {
                 Console.WriteLine("Nothing was deleted.");
                 return;

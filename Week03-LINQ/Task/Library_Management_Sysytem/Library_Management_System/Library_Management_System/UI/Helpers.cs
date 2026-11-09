@@ -48,7 +48,7 @@ namespace Library_Management_System.UI
 
                 if (int.TryParse(input, out int id))
                 {
-                    if (id == 0) throw new InvalidDataException();
+                    if (id == 0) throw new InvalidOperationException();
                     if (id > 0) return id;
                 }
                 Console.WriteLine("Please enter a valid positive number for the ID.");
@@ -86,15 +86,14 @@ namespace Library_Management_System.UI
             }
         }
         // skipping
-        public static bool? ReadOptionalYesNo(string prompt)
+        public static bool ReadOptionalYesNo(string prompt)
         {
             while (true)
             {
                 Console.Write($"{prompt} (y/n, press Enter to keep): ");
                 string input = ReadLine().Trim().ToLower();
-                if (input.Length == 0) return null;
+                if (input.Length == 0 || input is "n" or "no")  return false;
                 if (input is "y" or "yes") return true;
-                if (input is "n" or "no") return false;
                 Console.WriteLine("Please answer y or n, or press Enter to keep it.");
             }
         }
@@ -110,11 +109,13 @@ namespace Library_Management_System.UI
             while (true)
             {
                 Console.Write($"{prompt} (optional, press Enter to skip): ");
-                string input = ReadLine().Trim();
-                if (string.IsNullOrEmpty(input))
-                    return -1;
-                if (int.TryParse(input, out int value) && value >= min && value <= max)
+                string input = ReadLine();
+
+                 int.TryParse(input, out int value);
+                if (!string.IsNullOrEmpty(input) && !string.IsNullOrWhiteSpace(input) && (value >= min && value <= max))
                     return value;
+
+                
                 Console.WriteLine($"\"{input}\" is not valid. Please enter a number from {min} to {max}, or press Enter to skip.");
             }
         }
