@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System - Week 03</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #173653;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: #fff;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(120deg, #193d61, #244b72);
+            color: white;
+            padding: 35px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .header-content h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header-content p {
+            font-size: 17px;
+            color: #d9e8f5;
+        }
+
+        .tag {
+            background: #316ba9;
+            padding: 10px 20px;
+            border-radius: 30px;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        /* Main Layout */
+        main {
+            padding: 30px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        section {
+            margin-bottom: 28px;
+        }
+
+        h2 {
+            color: #123e70;
+            font-size: 22px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-number {
+            font-weight: bold;
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        /* Requirements */
+        .requirements,
+        .note-box,
+        .preview {
+            background: #edf5fc;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .requirements ul,
+        .notes-list {
+            list-style: none;
+        }
+
+        .requirements li {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+
+        .check {
+            background: #1762a8;
+            color: white;
+            width: 21px;
+            height: 21px;
+            min-width: 21px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 21px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 3px;
+        }
+
+        /* Database Note */
+        .note-box {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .note-box strong {
+            color: #164b80;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* UI Preview */
+        .preview {
+            padding: 20px;
+        }
+
+        .preview-description {
+            margin: 0 0 16px 52px;
+        }
+
+        .terminal {
+            background: #172334;
+            color: #e3f2fc;
+            padding: 18px;
+            border-radius: 9px;
+            margin-bottom: 12px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.65;
+        }
+
+        .terminal-title {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Bottom Sections */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 5px;
+        }
+
+        .feature-list,
+        .notes-list {
+            background: #edf5fc;
+            border-radius: 12px;
+            padding: 18px 20px 18px 38px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            position: relative;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: -24px;
+            top: 2px;
+            background: #164d78;
+            color: white;
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 11px;
+        }
+
+        .feature-list strong {
+            color: #125078;
+        }
+
+        .notes-list {
+            list-style: disc;
+            padding-left: 38px;
+        }
+
+        .notes-list li {
+            margin-bottom: 9px;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(120deg, #193d61, #244b72);
+            color: white;
+            padding: 20px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+        }
+
+        .footer-week {
+            border-left: 2px solid white;
+            padding-left: 25px;
+        }
+
+        /* Responsive */
+        @media (max-width: 800px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .main-grid,
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 20px;
+            }
+
+            .header-content h1 {
+                font-size: 25px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1>Library Management System</h1>
+            <p>
+                Build a console application to manage books, members, and loans
+                using SQL Server and LINQ.
+            </p>
+        </div>
+
+        <div class="tag">
+            C# · SQL Server · LINQ
+        </div>
+    </header>
+
+    <main>
+
+        <div class="main-grid">
+
+            <!-- Left Column -->
+            <div>
+
+                <!-- Objective -->
+                <section>
+                    <h2>1. Objective</h2>
+
+                    <p>
+                        Build a console application for a library management
+                        system that interacts with a SQL Server database.
+                        The application should allow users to manage books,
+                        members, and loans, and perform various operations
+                        such as searching, filtering, sorting, and viewing
+                        reports using LINQ.
+                    </p>
+                </section>
+
+                <!-- Requirements -->
+                <section>
+                    <h2>2. Requirements</h2>
+
+                    <div class="requirements">
+                        <ul>
+                            <li>
+                                <span class="check"></span>
+                                <span>
+                                    Connect to the provided SQL Server database.
+                                </span>
+                            </li>
+
+                            <li>
+                                <span class="check"></span>
+                                <span>
+                                    Implement core features for managing
+                                    books, members, and loans.
+                                </span>
+                            </li>
+
+                            <li>
+                                <span class="check"></span>
+                                <span>
+                                    Use LINQ for data processing and querying
+                                    where appropriate.
+                                </span>
+                            </li>
+
+                            <li>
+                                <span class="check"></span>
+                                <span>
+                                    Handle user input and provide a clear
+                                    and user-friendly console interface.
+                                </span>
+                            </li>
+
+                            <li>
+                                <span class="check"></span>
+                                <span>
+                                    Ensure the application is organized,
+                                    maintainable, and follows good coding
+                                    practices.
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Database -->
+                <section>
+                    <h2> 3. Database</h2>
+
+                    <p>
+                        You are provided with a SQL file that contains
+                        a pre-built database with sample data. Follow the
+                        instructions in the file to set up the database
+                        on your local SQL Server instance.
+                    </p>
+
+                    <div class="note-box">
+                        <strong>Note</strong>
+
+                        Make sure to run the SQL file using SQL Server
+                        Management Studio (SSMS) and verify that the
+                        database and data are created successfully
+                        before connecting your application.
+                    </div>
+                </section>
+
+                <!-- What You Will Build -->
+                <section>
+                    <h2>4. What You’ll Build</h2>
+
+                    <p>
+                        A console application with a menu-driven interface
+                        that provides functionalities to manage the library
+                        system. You can design the UI and features in a way
+                        that suits your approach and style.
+                    </p>
+                </section>
+
+            </div>
+
+            <!-- Right Column: UI Preview -->
+            <aside class="preview">
+
+                <h2> UI Preview (Example)</h2>
+
+                <p class="preview-description">
+                    This is just a sample of how your console application
+                    might look. You can design the interface in your own way.
+                </p>
+
+                <div class="terminal">
+<span class="terminal-title">========================================
+       Library Management System
+========================================</span>
+
+1. Books
+2. Members
+3. Loans
+4. Reports
+5. Exit
+
+Enter your choice: ▌
+                </div>
+
+                <div class="terminal">
+--- Books Menu ---
+
+1. View All Books
+2. Search for a Book
+3. Add a Book
+4. Update a Book
+5. Delete a Book
+6. Back to Main Menu
+
+Enter your choice: ▌
+                </div>
+
+                <div class="terminal">
+--- View All Books ---
+
+ID    Title              Author           Category    Status
+--------------------------------------------------------------
+1     Clean Code         Robert C. Martin Programming  Available
+2     The Martian        Andy Weir        Sci-Fi       Available
+3     Dune               Frank Herbert    Fantasy      Borrowed
+4     Harry Potter 1     J.K. Rowling     Fantasy      Available
+5     Atomic Habits      James Clear      Self-Help    Available
+
+Press any key to continue...
+                </div>
+
+            </aside>
+
+        </div>
+
+        <!-- Bottom Sections -->
+        <div class="bottom-grid">
+
+            <!-- Key Features -->
+            <section>
+                <h2> 6. Key Features</h2>
+
+                <ul class="feature-list">
+
+                    <li>
+                        <strong>Manage books</strong>
+                        (add, update, delete, view).
+                    </li>
+
+                    <li>
+                        <strong>Manage members</strong>
+                        (add, update, delete, view).
+                    </li>
+
+                    <li>
+                        <strong>Handle book loans and returns.</strong>
+                    </li>
+
+                    <li>
+                        <strong>Search, filter and sort data</strong>
+                        (e.g., by title, author, category, member).
+                    </li>
+
+                    <li>
+                        <strong>View lists with pagination</strong>
+                        (optional).
+                    </li>
+
+                    <li>
+                        <strong>Show relevant reports</strong>
+                        (e.g., most borrowed books, overdue loans, etc.).
+                    </li>
+
+                </ul>
+            </section>
+
+            <!-- Additional Notes -->
+            <section>
+                <h2> 7. Additional Notes</h2>
+
+                <ul class="notes-list">
+
+                    <li>
+                        You are free to design your own menu structure
+                        and user experience.
+                    </li>
+
+                    <li>
+                        The application should handle invalid input
+                        and edge cases (e.g., no results, duplicate
+                        entries, etc.).
+                    </li>
+
+                    <li>
+                        Focus on clean code, proper separation of concerns,
+                        and meaningful method names.
+                    </li>
+
+                    <li>
+                        Feel free to add any extra features you think
+                        are useful or interesting.
+                    </li>
+
+                </ul>
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div>
+         &nbsp; Library Management System
+        </div>
+
+        <div class="footer-week">
+            Week 03
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>
